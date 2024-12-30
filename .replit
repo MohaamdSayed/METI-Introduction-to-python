@@ -1,4 +1,4 @@
-entrypoint = "fibonaci_mini_project/main.py"
+entrypoint = "factorial_mini_project/main.py"
 modules = ["python-3.11"]
 
 [nix]
@@ -11,5 +11,5 @@ language = "python3"
 requiredFiles = [".replit", "replit.nix"]
 
 [deployment]
-run = ["python3", "fibonaci_mini_project/main.py"]
+run = ["python3", "factorial_mini_project/main.py"]
 deploymentTarget = "cloudrun"

@@ -5,4 +5,4 @@ for i in range(count):
   print(fib1)
   fib3 = fib1+fib2
   fib1 = fib2
-  fib2 =fib3
+  fib2 =fib3 
