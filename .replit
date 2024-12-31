@@ -1,5 +1,5 @@
 
-entrypoint = "fibb_recursion_mini_project/main.py"
+entrypoint = "calculate_the_avg/main.py"
 modules = ["python-3.11"]
 
 [nix]
@@ -12,5 +12,5 @@ language = "python3"
 requiredFiles = [".replit", "replit.nix"]
 
 [deployment]
-run =["python3","fibb_recursion_mini_project/main.py"]
+run = ["python3", "calculate_the_avg/main.py"]
 deploymentTarget = "cloudrun"
