@@ -1,5 +1,5 @@
 
-entrypoint = "insertion_sort_mini_project/main.py"
+entrypoint = "factorial_recursion_mini_project/main.py"
 modules = ["python-3.11"]
 
 [nix]
@@ -12,5 +12,5 @@ language = "python3"
 requiredFiles = [".replit", "replit.nix"]
 
 [deployment]
-run = ["python3", "insertion_sort_mini_project/main.py"]
+run =["python3","factorial_recursion_mini_project/main.py"]
 deploymentTarget = "cloudrun"
