@@ -1,5 +1,5 @@
 
-entrypoint = "calculate_the_avg/main.py"
+entrypoint = "personal_diary_mini_project/main.py"
 modules = ["python-3.11"]
 
 [nix]
@@ -12,5 +12,5 @@ language = "python3"
 requiredFiles = [".replit", "replit.nix"]
 
 [deployment]
-run = ["python3", "calculate_the_avg/main.py"]
+run = ["python3", "personal_diary_mini_project/main.py"]
 deploymentTarget = "cloudrun"
