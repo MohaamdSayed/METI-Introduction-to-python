@@ -1,0 +1,16 @@
+[
+    {
+        "account_holder_name": "sayed",
+        "account_type": "Savings",
+        "account_number": 1234,
+        "account_balance": 2000.0,
+        "transactions": [
+            {
+                "type": "Deposit",
+                "amount": 1000.0,
+                "date": "2025-01-05 19:16:39",
+                "balance_after": 2000.0
+            }
+        ]
+    }
+]
