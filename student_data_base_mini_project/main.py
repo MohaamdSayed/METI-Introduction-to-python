@@ -5,21 +5,22 @@ import textwrap
 
 
 class student:
+
     def __init__(self, name: str, age: int, grades: list):
         self.name = name
         self.age = age
         self.grades = grades
 
     def __repr__(self):
-        grades_table = [[subject + 1, score] for subject, score in enumerate(self.grades)]
-        table = tabulate(grades_table + [["Avg", sum(self.grades) / len(self.grades)]], headers=["Subject", "Score"],
+        grades_table = [[subject + 1, score]
+                        for subject, score in enumerate(self.grades)]
+        table = tabulate(grades_table +
+                         [["Avg", sum(self.grades) / len(self.grades)]],
+                         headers=["Subject", "Score"],
                          tablefmt="fancy_grid",
                          colalign=("center", "center"))
-        return (
-                "Student Name is: {}\n".format(self.name) +
-                "Age is: {}\n".format(self.age) +
-                "Grades:\n{}".format(table)
-        )
+        return ("Student Name is: {}\n".format(self.name) +
+                "Age is: {}\n".format(self.age) + "Grades:\n{}".format(table))
 
     def __str__(self):
         return str(self.__dict__)
@@ -32,12 +33,15 @@ class student:
             "grades": self.grades,
         }
 
+    def printSummary(self):
+        if (len(self.grades) == 0):
+            print("No grades to show")
+        else:
+            print(
+                """\n\nStudent: {} did register : {} Subjects with the following average: {}
+        """.format(self.name, len(self.grades),
+                   sum(self.grades) / len(self.grades)))
 
-# ahmed = student("Ahmed", 25, [100, 50, 90, 95])
-#
-# print(repr(ahmed))
-# print(ahmed)
-# students = [ahmed, ]
 
 # Handle the location of the text file dynamically to be in same folder that contains the running python script
 current_file_path = os.path.abspath(__file__)
@@ -63,14 +67,14 @@ def read_data():
     students = []
     for student_data in data.get("students", []):
         # Recreate the student object from the dictionary data
-        student_obj = student(student_data["name"], student_data["age"], student_data["grades"])
+        student_obj = student(student_data["name"], student_data["age"],
+                              student_data["grades"])
         students.append(student_obj)
     return students
 
 
 # write_data(students)
 students = read_data()
-print(students)
 
 
 def add_student(data: list):
@@ -99,11 +103,15 @@ def add_student(data: list):
                 if grade_input.isdigit():
                     thisGrade = float(grade_input)
                     if thisGrade > 100 or thisGrade < 0:
-                        raise ValueError("Grade should be between 0 - 100 Please Enter Correct Grade")
+                        raise ValueError(
+                            "Grade should be between 0 - 100 Please Enter Correct Grade"
+                        )
                     else:
                         std_grade.append(thisGrade)
                 else:
-                    raise (ValueError(f"Invalid input: '{grade_input}' is not a number. Please enter a valid grade."))
+                    raise (ValueError(
+                        f"Invalid input: '{grade_input}' is not a number. Please enter a valid grade."
+                    ))
             except Exception as e:
                 print(e)
         data.append(student(std_name, int(std_age), std_grade))
@@ -113,52 +121,71 @@ def add_student(data: list):
         print(e)
 
 
-def read_note(data: dict):
-    if not print_notes(data):
+def read_note(data: list):
+    if not print_students(data):
         return
-    note_id = input("Enter the note id to read: ")
-    if note_id in data.keys():
-        print(data[note_id])
-    else:
-        print("Note not found")
+    student_id = input("Enter the index of the Student you want: ")
+    if not student_id.isdigit():
+        print("Please enter a valid index.")
+        return
+    student_id = int(student_id)
+    if student_id > 0 and student_id < len(data):
+        student = data[student_id - 1]
+        student.printSummary()
+    # if note_id in data.keys():
+    #     print(data[0])
+    # else:
+    #     print("Note not found")
 
 
-def print_notes(my_dict: list):
-    if len(my_dict) > 0:
+def print_students(data: list):
+    if len(data) > 0:
         # Wrap long text
-        wrapped_data = [(key, textwrap.fill(str(value), width=20))
-                        for key, value in my_dict.items()]
-
-        print(
-            tabulate(wrapped_data,
-                     headers=["Note ID", "Note"],
-                     tablefmt="fancy_grid"))
+        index = 1
+        for dict in data:
+            wrapped_data = [("Index", index)
+                            ] + [(key, textwrap.fill(str(value), width=20))
+                                 for key, value in dict.__dict__.items()]
+            print(tabulate(wrapped_data, tablefmt="fancy_grid"))
+            index += 1
         return True
     else:
         print("\nNo Notes Found Enter your First Note\n")
         return False
 
 
+def delete_student(data: list):
+    if not print_students(data):
+        return
+    student_id = input("Enter the index of the Student you want: ")
+    if not student_id.isdigit():
+        print("Please enter a valid index.")
+        return
+    student_id = int(student_id)
+    if student_id > 0 and student_id < len(data):
+        student = data[student_id - 1]
+        data.remove(student)
+
+
 def main():
-    notes = read_data()
+    students = read_data()
     while True:
-        print("1. Add note")
-        print("2. Delete note")
-        print("3. Read Note")
+        print("1. Add Student")
+        print("2. Delete Student")
+        print("3. Read Student")
         print("4. Exit")
         choice = input("Enter your choice: ")
         match choice:
             case "1":
                 add_student(read_data())
-                notes = read_data()
+                students = read_data()
 
             case "2":
-                delete_note(notes)
-                notes = read_data()
-
+                delete_student(students)
+                write_data(students)
             case "3":
-                read_note(notes)
-                notes = read_data()
+                read_note(students)
+                students = read_data()
             case "4":
                 return
             case _:
