@@ -1,5 +1,5 @@
 
-entrypoint = "student_data_base_mini_project/main.py"
+entrypoint = "libaray_catalouge_mini_project/main.py"
 modules = ["python-3.11"]
 
 [nix]
@@ -12,5 +12,5 @@ language = "python3"
 requiredFiles = [".replit", "replit.nix"]
 
 [deployment]
-run = ["python3", "student_data_base_mini_project/main.py"]
+run = ["python3", "libaray_catalouge_mini_project/main.py"]
 deploymentTarget = "cloudrun"
